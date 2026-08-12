@@ -27,7 +27,12 @@
                     Exploratory Data Analysis (EDA)
                 </a>
             </li>
-            <li class="menu-item disabled">Preprocessing (coming soon)</li>
+            <li>
+                <a href="{{ url_for('preprocessing') }}"
+                   class="menu-item {% if active == 'preprocessing' %}active{% endif %}">
+                    Preprocessing
+                </a>
+            </li>
             <li class="menu-item disabled">Model Training (coming soon)</li>
             <li class="menu-item disabled">Prediction (coming soon)</li>
         </ul>
@@ -113,6 +118,40 @@
                         {% for img_path in section.images %}
                         <div class="eda-item">
                             <img src="{{ url_for('static', filename=img_path) }}" alt="EDA Plot" class="eda-img" />
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="eda-no-plot">
+                        <em>(No graphs generated for this step)</em>
+                    </div>
+                    {% endif %}
+                </div>
+                {% if not loop.last %}
+                <hr class="eda-divider" />
+                {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if active == 'preprocessing' %}
+            <h2>Preprocessing</h2>
+            
+            {% if error %}
+                <div class="error">{{ error }}</div>
+            {% endif %}
+
+            <div class="eda-container">
+                {% for section in preprocessing_sections %}
+                <div class="eda-section">
+                    <h3>{{ section.title }}</h3>
+                    <p class="eda-explanation">{{ section.explanation }}</p>
+                    
+                    {% if section.images %}
+                    <div class="eda-grid">
+                        {% for img_path in section.images %}
+                        <div class="eda-item">
+                            <img src="{{ url_for('static', filename=img_path) }}" alt="Preprocessing Plot" class="eda-img" />
                         </div>
                         {% endfor %}
                     </div>

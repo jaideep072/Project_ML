@@ -134,5 +134,29 @@ def eda():
     ]
     return render_template("index.html", active="eda", eda_sections=eda_sections)
 
+@app.route("/preprocessing")
+def preprocessing():
+    preprocessing_sections = [
+        {
+            "id": 1,
+            "title": "1. Outlier Fix (CodingTestScore)",
+            "explanation": "Applying Min-Max Scaling on the 'CodingTestScore' column to scale the values to a range between 0 and 1, which helps in standardizing the distribution.",
+            "images": ["preprocessing_plots/plot_1.png"]
+        },
+        {
+            "id": 2,
+            "title": "2. Standard Scaling",
+            "explanation": "Applying Standard Scaling to multiple numeric columns (CGPA, SoftSkillsRating, AttendancePercent, AptitudeTestScore). This transforms the data so that it has a mean of 0 and a standard deviation of 1.",
+            "images": [f"preprocessing_plots/plot_{i}.png" for i in range(2, 6)]
+        },
+        {
+            "id": 3,
+            "title": "3. Minimax Scaling",
+            "explanation": "Applying Min-Max Scaling to a broader set of numeric columns (CGPA, AttendancePercent, AptitudeTestScore, CodingTestScore, Internships). This transforms all these features to have values between 0 and 1.",
+            "images": [f"preprocessing_plots/plot_{i}.png" for i in range(6, 11)]
+        }
+    ]
+    return render_template("index.html", active="preprocessing", preprocessing_sections=preprocessing_sections)
+
 if __name__ == "__main__":
     app.run(debug=True)
